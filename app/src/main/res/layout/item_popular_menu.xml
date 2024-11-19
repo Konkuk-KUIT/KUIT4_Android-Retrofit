@@ -25,14 +25,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_popular_menu_img" />
 
-    <TextView
-        android:id="@+id/tv_popular_menu_time"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="30분"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_popular_menu_name" />
+        app:layout_constraintTop_toTopOf="@id/tv_popular_menu_name"
+        >
+
+    <TextView
+        android:id="@+id/tv_popular_menu_delivery_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_popular_menu_minute"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_popular_menu_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tv_popular_menu_delivery_time"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/iv_popular_menu_star"
