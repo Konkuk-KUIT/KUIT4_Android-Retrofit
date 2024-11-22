@@ -1,26 +1,26 @@
 package com.example.kuit4_android_retrofit
 
-import RVPopularMenuAdapter
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kuit4_android_retrofit.data.CategoryDB
+import com.bumptech.glide.Glide
+import com.example.kuit4_android_retrofit.adapter.RVPopularMenuAdapter
 import com.example.kuit4_android_retrofit.data.CategoryData
+import com.example.kuit4_android_retrofit.data.PopularMenuData
 import com.example.kuit4_android_retrofit.databinding.FragmentHomeBinding
 import com.example.kuit4_android_retrofit.databinding.ItemCategoryBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.kuit4_android_retrofit.retrofit.RetrofitObject
+import com.example.kuit4_android_retrofit.retrofit.service.CategoryService
+import com.example.kuit4_android_retrofit.retrofit.service.PopularMenuService
+import retrofit2.Call
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var db: CategoryDB
+    private lateinit var rvPopularMenuAdapter: RVPopularMenuAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,69 +28,83 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        db = CategoryDB.getInstance(requireContext())
 
-        initDatabaseIfNeeded()
-        loadCategoryItems()
-        loadPopularMenuItems()
+        fetchCategoryInfo()
+        fetchPopularMenuInfo()
 
         return binding.root
     }
 
-    private fun initDatabaseIfNeeded() {
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("menu_category", Context.MODE_PRIVATE)
+    private fun fetchCategoryInfo() {
+        val service = RetrofitObject.retrofit.create(CategoryService::class.java)
+        val call = service.getCategories()
 
-        if (!sharedPreferences.getBoolean("isDataInitialized", false)) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                db.menuDao().apply {
-                    insert(CategoryData(getString(R.string.pork_cutlet), R.drawable.img_pork_cutlet))
-                    insert(CategoryData(getString(R.string.japanese_food), R.drawable.img_japanese_food))
-                    insert(CategoryData(getString(R.string.korean_food), R.drawable.img_korean_food))
-                    insert(CategoryData(getString(R.string.chicken), R.drawable.img_chicken))
-                    insert(CategoryData(getString(R.string.snack_food), R.drawable.img_snack_food))
-                    insert(CategoryData(getString(R.string.bossam), R.drawable.img_bossam))
-                    insert(CategoryData(getString(R.string.soup), R.drawable.img_soup))
-                    insert(CategoryData(getString(R.string.barbeque), R.drawable.img_barbeque))
-                    insert(CategoryData(getString(R.string.pizza), R.drawable.img_pizza))
+        call.enqueue(
+            object : retrofit2.Callback<List<CategoryData>> {
+                override fun onResponse(
+                    call: Call<List<CategoryData>>,
+                    response: Response<List<CategoryData>>
+                ) {
+                    if (response.isSuccessful) {
+                        val categoryResponse = response.body()
+
+                        if(!categoryResponse.isNullOrEmpty()) {
+                            showCategoryInfo(categoryResponse)
+                        }
+                    }
                 }
 
-                with(sharedPreferences.edit()) {
-                    putBoolean("isDataInitialized", true)
-                    apply()
+                override fun onFailure(call: Call<List<CategoryData>>, t: Throwable) {
                 }
+
             }
-        }
+        )
     }
 
-    private fun loadCategoryItems() {
-        lifecycleScope.launch {
-            val categoryList =
-                withContext(Dispatchers.IO) {
-                    db.menuDao().getAll()
-                }
-            addCategoryItems(categoryList)
-        }
-    }
-
-    private fun loadPopularMenuItems() {
-        lifecycleScope.launch {
-            val popularMenuItems =
-                withContext(Dispatchers.IO) {
-                    db.menuDao().getAll()
-                }
-
-            binding.rvMainPopularMenus.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvMainPopularMenus.adapter = RVPopularMenuAdapter(popularMenuItems)
-        }
-    }
-
-    private fun addCategoryItems(categoryList: List<CategoryData>) {
+    private fun showCategoryInfo(categoryList: List<CategoryData>) {
         val inflater = LayoutInflater.from(requireContext())
+        binding.llMainMenuCategory.removeAllViews()
+
         categoryList.forEach { category ->
-            val categoryBinding = ItemCategoryBinding.inflate(inflater, binding.hsvMainMenuCategory, false)
-            categoryBinding.sivCategoryImg.setImageResource(category.categoryImg)
+            val categoryBinding = ItemCategoryBinding.inflate(inflater, binding.llMainMenuCategory, false)
+
+            Glide
+                .with(this)
+                .load(category.categoryImg)
+                .into(categoryBinding.sivCategoryImg)
+
             categoryBinding.tvCategoryName.text = category.categoryName
+
             binding.llMainMenuCategory.addView(categoryBinding.root)
         }
+    }
+
+    private fun fetchPopularMenuInfo() {
+        val service = RetrofitObject.retrofit.create(PopularMenuService::class.java)
+        val call = service.getPopularMenu()
+
+        call.enqueue(
+            object : retrofit2.Callback<List<PopularMenuData>> {
+                override fun onResponse(
+                    call: Call<List<PopularMenuData>>,
+                    response: Response<List<PopularMenuData>>
+                ) {
+                    if (response.isSuccessful) {
+                        val popularMenuResponse = response.body()
+                        if (!popularMenuResponse.isNullOrEmpty()) {
+                            showPopularMenuInfo(popularMenuResponse)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<PopularMenuData>>, t: Throwable) {
+                }
+            })
+    }
+
+    private fun showPopularMenuInfo(popularMenuList: List<PopularMenuData>) {
+        rvPopularMenuAdapter = RVPopularMenuAdapter(requireContext(), popularMenuList)
+        binding.rvMainPopularMenus.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMainPopularMenus.adapter = rvPopularMenuAdapter
     }
 }
