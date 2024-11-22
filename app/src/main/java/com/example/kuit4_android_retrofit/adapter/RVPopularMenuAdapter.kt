@@ -21,7 +21,7 @@ class RVPopularMenuAdapter(
 
             // 텍스트 설정
             binding.tvPopularMenuName.text = item.menuName
-            binding.tvPopularMenuDeliveryTime.text = item.deliveryTime.toString()
+            binding.tvPopularMenuTime.text = item.deliveryTime.toString() + "분"
             binding.tvPopularMenuRate.text = item.menuRating.toString()
         }
     }
