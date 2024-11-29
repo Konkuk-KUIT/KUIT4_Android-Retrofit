@@ -7,5 +7,6 @@ data class PopularMenuData(
     val popularMenuName: String,
     val popularMenuImg: String,
     val popularMenuTime: Int,
-    val popularMenuRating: Double
+    val popularMenuRating: Double,
+    val id : String
 )
