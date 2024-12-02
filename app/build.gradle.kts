@@ -24,8 +24,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // Base_URL을 BuildConfig에 추가!!!!!!!!!!!!!!!!!
-        val baseUrl = properties["BASE_URL"]?.toString() ?: "https://6739ab03a3a36b5a62ef4125.mockapi.io/kuit/"
-        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        val baseUrl = properties["BASE_URL"]?.toString() ?: "https://default-rul.com/"
+        buildConfigField("String", "BASE_URL", baseUrl)//"$baseUrl"
     }
 
     buildFeatures {

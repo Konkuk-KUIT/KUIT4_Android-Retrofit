@@ -1,11 +1,11 @@
 package com.example.kuit4_android_retrofit.retrofit
 
 import com.example.kuit4_android_retrofit.BuildConfig
+import com.example.kuit4_android_retrofit.BuildConfig.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitObject {
-    private const val BASE_URL = BuildConfig.BASE_URL
 
     // 슬래쉬 꼭 붙이기 조심
     // 로컬프로펄티
