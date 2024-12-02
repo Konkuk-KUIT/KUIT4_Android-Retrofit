@@ -1,7 +1,17 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+}
+
+val localProperties = File(rootDir, "local.properties")
+val baseUrl: String = if (localProperties.exists()) {
+    val properties = Properties().apply { load(localProperties.inputStream()) }
+    properties.getProperty("BASE_URL", "")
+} else {
+    ""
 }
 
 android {
@@ -16,10 +26,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
     }
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     buildTypes {
         release {
@@ -40,7 +52,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -52,8 +63,11 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.retrofit.runtime)
+    implementation(libs.retrofit.gsonConverter)
+    implementation(libs.retrofit.scalarsConverter)
 }
