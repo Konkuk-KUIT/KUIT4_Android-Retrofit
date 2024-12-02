@@ -1,19 +1,35 @@
+package com.example.kuit4_android_retrofit.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kuit4_android_retrofit.data.CategoryData
-import com.example.kuit4_android_retrofit.databinding.ItemCategoryBinding
+import com.bumptech.glide.Glide
+import com.example.kuit4_android_retrofit.data.MenuData
+import com.example.kuit4_android_retrofit.databinding.ItemPopularMenuBinding
+import com.example.kuit4_android_retrofit.HomeFragment
 
 class RVPopularMenuAdapter(
-    private val menuList: List<CategoryData>,
+    private val context: Context,
+    private var menuList: List<MenuData>,
+    private val fragment: HomeFragment
 ) : RecyclerView.Adapter<RVPopularMenuAdapter.ViewHolder>() {
     inner class ViewHolder(
-        private val binding: ItemCategoryBinding,
+        private val binding: ItemPopularMenuBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CategoryData) {
-            binding.sivCategoryImg.setImageResource(item.categoryImg)
-            binding.tvCategoryName.text = item.categoryName
+        fun bind(item: MenuData) {
+            binding.tvPopularMenuName.text = item.menuName
+            binding.tvPopularMenuTime.text = item.eta.toString()+"분"
+            binding.tvPopularMenuRate.text = item.rating.toString()
+            //인자로 받은 함수 호출
+            binding.root.setOnClickListener {
+                fragment.showPopularMenuOptionsDialog(item)
+            }
+
+            Glide.with(context)
+                .load(item.menuImgUrl)
+                .placeholder(android.R.color.transparent)
+                .into(binding.ivPopularMenuImg)
         }
     }
 
@@ -22,7 +38,7 @@ class RVPopularMenuAdapter(
         viewType: Int,
     ): ViewHolder {
         val binding =
-            ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPopularMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -34,4 +50,6 @@ class RVPopularMenuAdapter(
     }
 
     override fun getItemCount(): Int = menuList.size
+
+
 }
