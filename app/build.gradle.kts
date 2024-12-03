@@ -1,8 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
 }
+
+val properties = Properties()
+val propertiesFile = project.rootProject.file("local.properties") // 속성 파일 경로
+properties.load(propertiesFile.inputStream())
 
 android {
     namespace = "com.example.kuit4_android_retrofit"
@@ -16,6 +22,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val baseUrl = properties["BASE_URL"]?.toString() ?: "https://default-url.com/"
+        buildConfigField("String", "BASE_URL", baseUrl)
     }
 
     buildFeatures {
@@ -56,4 +65,12 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
+
+    val retrofit_version = "2.6.1"
+// Retrofit 라이브러리
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+// Gson Converter 라이브러리
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+// Scalars Converter 라이브러리
+    implementation("com.squareup.retrofit2:converter-scalars:$retrofit_version")
 }
