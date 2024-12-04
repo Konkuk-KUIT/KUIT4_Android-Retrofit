@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcv_map"
+        android:name="com.naver.maps.map.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/btn_bottom_sheet_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expand Bottom Sheet" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_sheet_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:elevation="16dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <View
+            android:id="@+id/v_bottom_sheet_bar"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_add_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Add Pin" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
