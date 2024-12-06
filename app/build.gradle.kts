@@ -72,4 +72,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
     // Scalars Converter 라이브러리
     implementation("com.squareup.retrofit2:converter-scalars:$retrofit_version")
+
+    implementation("com.naver.maps:map-sdk:3.20.0")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }

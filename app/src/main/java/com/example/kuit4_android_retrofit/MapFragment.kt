@@ -1,32 +1,39 @@
 package com.example.kuit4_android_retrofit
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.kuit4_android_retrofit.databinding.DialogAddCommentBinding
+import com.example.kuit4_android_retrofit.databinding.FragmentMapBinding
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class MapFragment : Fragment(), OnMapReadyCallback {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MapFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding : FragmentMapBinding
+
+    private lateinit var navermap : NaverMap
+    private lateinit var locationSource : FusedLocationSource
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
     }
 
     override fun onCreateView(
@@ -34,30 +41,68 @@ class MapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+
+        binding = FragmentMapBinding.inflate(layoutInflater)
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MapFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(
-            param1: String,
-            param2: String,
-        ) = MapFragment().apply {
-            arguments =
-                Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as MapFragment ?: MapFragment.newInstance().also {
+            childFragmentManager.beginTransaction().add(R.id.fcv_map, it).commit()
         }
+        mapFragment.getMapAsync(this)
     }
+
+    override fun onMapReady(navermap: NaverMap) {
+        this.navermap = navermap
+        navermap.locationSource = locationSource
+        navermap.locationTrackingMode = LocationTrackingMode.Follow
+        navermap.uiSettings.isLocationButtonEnabled = true
+
+/*        navermap.addOnLocationChangeListener { location ->
+            val currentLatLng = LatLng(location.latitude, location.longitude)
+            val cameraUpdate = CameraUpdate.scrollTo(currentLatLng)
+            navermap.moveCamera(cameraUpdate)
+        }*/
+
+        val marker1 = Marker()
+        marker1.position = LatLng(37.53517667419473, 127.08265074885249)
+        marker1.captionText = "맛집 1"
+        marker1.map = navermap
+
+        val marker2 = Marker()
+        marker2.position = LatLng(37.53267612285849, 127.07977426099593)
+        marker2.captionText = "맛집 2"
+        marker2.map = navermap
+
+        marker1.setOnClickListener {
+            val message = Toast.makeText(requireContext(), marker1.captionText, Toast.LENGTH_SHORT)
+            message.show()
+            true
+        }
+        val dialogbinding = DialogAddCommentBinding.inflate(LayoutInflater.from(requireContext()))
+
+        marker2.setOnClickListener {
+            val dialog = AlertDialog.Builder(requireContext()).setView(dialogbinding.root).create()
+
+            dialog.show()
+            dialogbinding.btnAddMemo.setOnClickListener {
+                val memo = dialogbinding.etMemo.text.toString().trim()
+                if (memo.isNotEmpty()) {
+                    marker2.subCaptionText = memo
+                    dialog.dismiss()
+                } else {
+                    Toast.makeText(requireContext(), "모든 필드를 입력하세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+
+    }
+
+
 }
