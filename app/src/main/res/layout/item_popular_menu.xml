@@ -29,7 +29,15 @@
         android:id="@+id/tv_popular_menu_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="30분"
+        android:text="30"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_popular_menu_time_string"
+        app:layout_constraintTop_toTopOf="@id/tv_popular_menu_name" />
+    <TextView
+        android:id="@+id/tv_popular_menu_time_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_popular_menu_name" />

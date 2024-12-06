@@ -1,14 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoriteFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- 메인 콘텐츠 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/showBottomSheetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expand Bottom Sheet" />
+
+        <Button
+            android:id="@+id/hideBottomSheetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collapse Bottom Sheet" />
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

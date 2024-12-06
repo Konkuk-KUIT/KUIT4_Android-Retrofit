@@ -1,0 +1,79 @@
+[33mcommit e5d7a91e31fdbc0989ab65727bb72aa703376d33[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbw-green[m[33m, [m[1;31morigin/bw-green[m[33m)[m
+Author: bw-green <bwgreen621@gmail.com>
+Date:   Fri Nov 22 21:55:32 2024 +0900
+
+    8주차 미션 / 1조 강병완
+
+[33mcommit 06eaaf01abdc71e4ad8c93779a77d20371f2000f[m
+Merge: a7d89c6 c29d519
+Author: bw-green <bwgreen621@gmail.com>
+Date:   Fri Nov 22 21:49:13 2024 +0900
+
+    Merge branch 'main' into bw-green
+
+[33mcommit a7d89c61e4e00cd8156a284085af2b217391e35b[m
+Author: bw-green <bwgreen621@gmail.com>
+Date:   Fri Nov 22 21:45:42 2024 +0900
+
+    8주차 미션 / 1조 강병완
+
+[33mcommit de8191702579fae7ccbbee1b11cebbbb0d5a798c[m
+Merge: 1ee5147 861013d
+Author: bw-green <bwgreen621@gmail.com>
+Date:   Fri Nov 22 21:43:53 2024 +0900
+
+    Merge remote-tracking branch 'origin/bw-green' into bw-green
+
+[33mcommit 1ee51477c68bf610f71e6ca54fd1462a8819ec4a[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 03:37:18 2024 +0900
+
+    8주차 미션 / 1조 강병완
+
+[33mcommit c29d51940e90c16e1aa0b3900294a09267449872[m[33m ([m[1;32mmain[m[33m)[m
+Author: bw-green <bwgreen621@gmail.com>
+Date:   Fri Nov 22 21:34:56 2024 +0900
+
+    8주차 미션 / 1조 강병완
+
+[33mcommit 861013d0646022c41aba099f156beb606690247b[m[33m ([m[1;31morigin/wa4abi[m[33m, [m[1;31morigin/nasohee[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/garlic[m[33m, [m[1;31morigin/casper-jr[m[33m, [m[1;31morigin/alswlekk[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 03:37:18 2024 +0900
+
+    fix: 데이터 오류 수정
+
+[33mcommit 12d88e9c0685a34e7398450e169b67e3be87640f[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 02:51:29 2024 +0900
+
+    fix: id 오류 수정
+
+[33mcommit 12321612d75bb24e414b87c7add3450f7be0f6b4[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 02:51:05 2024 +0900
+
+    fix: id 오류 수정
+
+[33mcommit b4987c85646a247fb2eb4aa5addc597f98ec637d[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 02:03:21 2024 +0900
+
+    design: 디자인 일부 수정
+
+[33mcommit abcc0e66f2557bdefdf871ca5614ced17fbe76b4[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 01:57:11 2024 +0900
+
+    fix: 이름 설정 오류 해결
+
+[33mcommit 062e3fdb65af48c17b08b2dca48376337be399be[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 00:10:38 2024 +0900
+
+    chore: category로 이름 변경
+
+[33mcommit fa19918faf6f90648997f65c2d442dddb0d63a1b[m
+Author: Naeun Kim <102296721+Nico1eKim@users.noreply.github.com>
+Date:   Wed Nov 13 00:00:33 2024 +0900
+
+    feat: 8주차 강의 진행 화면 구현 완료
